@@ -521,7 +521,7 @@ function ChatRoomSearch(data, socket) {
 							if (ChatRoom[C].Ban.indexOf(Acc.MemberNumber) < 0) // The player cannot be banned
 								if ((data.Query == "") || (ChatRoom[C].Name.toUpperCase().indexOf(data.Query) >= 0)) // Room name must contain the searched name, if any
 									if (!ChatRoom[C].Locked || (ChatRoom[C].Admin.indexOf(Acc.MemberNumber) >= 0)) // Must be unlocked, unless the player is an administrator
-										if (!ChatRoom[C].Private || (ChatRoom[C].Name.toUpperCase() == data.Query)) // If it's private, must know the exact name
+										if (!ChatRoom[C].Private || (ChatRoom[C].Name.toUpperCase() == data.Query) || (ChatRoom[C].PrivateInvite.indexOf(Acc.MemberNumber) >= 0)) // If it's private, must know the exact name or be invited
 											if (IgnoredRooms.indexOf(ChatRoom[C].Name.toUpperCase()) == -1) { // Room name cannot be ignored
 
 												// Builds the searching account friend list in the current room
