@@ -590,6 +590,7 @@ function ChatRoomCreate(data, socket) {
 					Background: data.Background,
 					Limit: ((data.Limit == null) || (typeof data.Limit !== "string") || isNaN(parseInt(data.Limit)) || (parseInt(data.Limit) < 2) || (parseInt(data.Limit) > 10)) ? 10 : parseInt(data.Limit),
 					Private: data.Private || false,
+					PrivateInvite: [Acc.MemberNumber],
 					Locked : data.Locked || false,
 					Environment: Acc.Environment,
 					Space: Space,
@@ -782,6 +783,7 @@ function ChatRoomSync(CR, SourceMemberNumber) {
 	R.Locked = CR.Locked;
 	R.Private = CR.Private;
 	R.BlockCategory = CR.BlockCategory;
+	R.PrivateInvite = CR.PrivateInvite;
 
 	// Adds the characters from the room
 	R.Character = [];
@@ -911,6 +913,7 @@ function ChatRoomAdmin(data, socket) {
 						Acc.ChatRoom.Game = ((data.Room.Game == null) || (typeof data.Room.Game !== "string") || (data.Room.Game.length > 100)) ? "" : data.Room.Game;
 						Acc.ChatRoom.Limit = ((data.Room.Limit == null) || (typeof data.Room.Limit !== "string") || isNaN(parseInt(data.Room.Limit)) || (parseInt(data.Room.Limit) < 2) || (parseInt(data.Room.Limit) > 10)) ? 10 : parseInt(data.Room.Limit);
 						if ((data.Room.Private != null) && (typeof data.Room.Private === "boolean")) Acc.ChatRoom.Private = data.Room.Private;
+						Acc.ChatRoom.PrivateInvite = data.Room.PrivateInvite || [];
 						if ((data.Room.Locked != null) && (typeof data.Room.Locked === "boolean")) Acc.ChatRoom.Locked = data.Room.Locked;
 						socket.emit("ChatRoomUpdateResponse", "Updated");
 						if ((Acc != null) && (Acc.ChatRoom != null)) {
